@@ -1,9 +1,4 @@
 fn bigger(a: i32, b: i32) -> i32 {
-    // TODO: Complete this function to return the bigger number!
-    // If both numbers are equal, any of them can be returned.
-    // Do not use:
-    // - another function call
-    // - additional variables
     if a>b{
         a
     }else{
@@ -11,11 +6,24 @@ fn bigger(a: i32, b: i32) -> i32 {
     }
 }
 
-fn main() {
-    // You can optionally experiment here.
+fn bigger_ref(a: &i32, b: &i32) -> i32 {
+    if a>b{
+        *a
+    }else{
+        *b
+    }
 }
 
-// Don't mind this for now :)
+fn main() {
+   let x:u8 = 11;
+   let y:u8 = 23;
+   println!("{}",bigger(x.into(),y.into()));
+   let x:i32 =111;
+   let y:i32 =222;
+   println!("{}",bigger_ref(&x,&y));
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
