@@ -16,7 +16,6 @@ struct State {
     height: u64,
     position: Point,
     message: String,
-    // RGB color composed of red, green and blue.
     color: (u8, u8, u8),
     quit: bool,
 }
@@ -42,13 +41,22 @@ impl State {
     fn quit(&mut self) {
         self.quit = true;
     }
+    fn all(&mut self){
+        println!("{}",String::from("alllll innnn"));
+        self.message = String::from("alllll innnn")
+    }
+
 
     fn process(&mut self, message: Message) {
-        // TODO: Create a match expression to process the different message
-        // variants using the methods defined above.
-    }
+     match message {
+     Message::Resize{width,height} => self.resize(width,height),
+     Message::Move(point) =>   self.move_position(point) ,
+     Message::Quit => self.quit(),
+     Message::Echo(_) => self.all(),
+     Message::ChangeColor(x,y, z ) => self.change_color(x,y,z),
+     }
 }
-
+}
 fn main() {
     // You can optionally experiment here.
 }
@@ -68,12 +76,9 @@ mod tests {
             quit: false,
         };
 
-        state.process(Message::Resize {
-            width: 10,
-            height: 30,
-        });
+        state.process(Message::Resize { width: 10,height: 30,});
         state.process(Message::Move(Point { x: 10, y: 15 }));
-        state.process(Message::Echo(String::from("Hello world!")));
+        state.process(Message::Echo(String::from("alllll innnn")));
         state.process(Message::ChangeColor(255, 0, 255));
         state.process(Message::Quit);
 
@@ -81,7 +86,7 @@ mod tests {
         assert_eq!(state.height, 30);
         assert_eq!(state.position.x, 10);
         assert_eq!(state.position.y, 15);
-        assert_eq!(state.message, "Hello world!");
+        assert_eq!(state.message, "alllll innnn");
         assert_eq!(state.color, (255, 0, 255));
         assert!(state.quit);
     }

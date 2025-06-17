@@ -23,18 +23,18 @@ impl Package {
         }
     }
 
-    // TODO: Add the correct return type to the function signature.
-    fn is_international(&self) {
-        // TODO: Read the tests that use this method to find out when a package
-        // is considered international.
+
+    // Returns true if the sender and recipient countries are different.
+    fn is_international(&self) -> bool {
+        self.sender_country != self.recipient_country
     }
 
     // TODO: Add the correct return type to the function signature.
-    fn get_fees(&self, cents_per_gram: u32) {
-        // TODO: Calculate the package's fees.
+    // Returns the total fees for the package.
+    fn get_fees(&self, cents_per_gram: u32) -> u32 {
+        self.weight_in_grams * cents_per_gram
     }
 }
-
 fn main() {
     // You can optionally experiment here.
 }
@@ -59,8 +59,8 @@ mod tests {
 
         let package = Package::new(sender_country, recipient_country, 1200);
 
+        assert!(package.is_international(),"{}",true);
         assert!(package.is_international());
-    }
 
     #[test]
     fn create_local_package() {
@@ -84,4 +84,5 @@ mod tests {
         assert_eq!(package.get_fees(cents_per_gram), 4500);
         assert_eq!(package.get_fees(cents_per_gram * 2), 9000);
     }
+}
 }
